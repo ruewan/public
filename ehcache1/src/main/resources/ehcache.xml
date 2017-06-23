@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+    updateCheck="false" name="JGroupsCache">
+ 
+ <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory" properties="hostName=localhost, peerDiscovery=automatic, multicastGroupAddress=224.0.0.2, multicastGroupPort=23409, timeToLive=32"/>
+ <cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory" />
+    <defaultCache maxElementsInMemory="50" eternal="false"
+        overflowToDisk="false" memoryStoreEvictionPolicy="LFU">
+            <cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
+			replicateUpdatesViaCopy=false, replicateRemovals=true "/>
+    </defaultCache>
+ 
+    <cache name="greetingCache" eternal="false" maxElementsInMemory="100"
+        overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+        timeToLiveSeconds="60" memoryStoreEvictionPolicy="LRU">
+            <cacheEventListenerFactory
+class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
+replicateUpdatesViaCopy=false, replicateRemovals=true "/>
+    </cache>
+</ehcache>
